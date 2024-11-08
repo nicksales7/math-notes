@@ -153,11 +153,11 @@ Thus $T(Span(A)) \subseteq SpanT(A)$. We therefore conclude $SpanT(A) = T(Span(A
 
 \subsection{Linear Dependence/Independence}
 
-\textbf{Definition 2.2.1:} Suppose $V$ is a vector space and $v_i \in V$ are a list vectors in $V$ and $c_i \in F$ are a list of scalars in $F$ with $i \in \mathbb{N}$. If at least one of the $c_i$ is nonzero and:
+\textbf{Definition 2.2.1:} Suppose $V$ is a vector space with $v_1 \dots , v_n \in V$ and $c_1 , \dots , c_n \in F$. If at least one of the $c_i$ is nonzero and:
 \begin{equation*}
-    \sum_{n = 1}^{i} c_n v_n = \vec{0}
+    c_1 v_1 + \dots + c_n v_n = \vec{0},
 \end{equation*}
-We say that the list of vectors is linearly dependent. If the $c_i$ must all be zero for the equation to hold true, the list is said to be linearly independent. \\
+we say that the list of vectors is linearly dependent. If the $c_i$ must all be zero for the equation to hold true, the list is said to be linearly independent. \\
 \textbf{Definition 2.2.2:} If $A$ is any (possibily infinite) set of vectors in a vector space $V$, if every finite list of distinct vectors in $A$ is linearly independent, then $A$ is linearly independent. However, if there is some finite list of vectors in $A$ that is linearly dependent, then $A$ is linearly dependent. \\
 \textbf{Theorem 2.2.1:} Suppose $V$ is a vector space over a field $F$ with $v_1 , \dots, v_n \in V$. Define the linear map $T : F^n \rightarrow V$ by $T(a_1, \dots, a_n) = a_1 v_1 + \dots + a_n v_n$. The list of vectors $v_1, \dots, v_n$ are linearly dependent iff $T$ is not injective. \\
 \vspace{0.1cm} \\
