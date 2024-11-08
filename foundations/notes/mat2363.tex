@@ -1,0 +1,98 @@
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{8cm}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+% Document settings
+\geometry{a4paper, margin=1in}
+\setlength\parindent{0pt}
+\setlength\parskip{1em}
+
+\title{MAT 2362 Notes}
+\author{Nicholas Sales}
+\date{\today} % This will automatically insert today's date
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+    
+
+\section{Lecture 4}
+\textbf{Definition 4.1.1:} Let $\{A_{i}\;:\;i\in{\mathbb{N}}\}$ be a set with sets in it. We can union and intersect sets with specified indices (like summations):
+\begin{equation*}
+    \bigcup^{n\in{\mathbb{N}}}_{i=1}A_{i}=A_{1} \cup A_{2} \cup \dots \cup A_{n}
+\end{equation*}
+\begin{equation*} 
+    \bigcap^{n\in{\mathbb{N}}}_{i=1}A_{i}=A_{1} \cap A_{2} \cap \dots \cap A_{n}
+\end{equation*}
+\textbf{Example 4.1.1:} Prove that $\bigcup_{n=2}^{\infty}(0,1-\frac{1}{n})=(0,1)$. \\
+\textbf{Proof:} We first prove $(0,1) \subseteq \bigcup_{n=2}^{\infty}(0,1-\frac{1}{n})$. Let $x \in (0,1)$. Since $x$ is strictly less than $1$, it follows that there will exist some $n \in \mathbb{N}$ where $1-\frac{1}{n} > x$ as $1-\frac{1}{n}=1$ for $n \rightarrow \infty$. So for any $x$ in $(0,1)$ we can find an $n$ that is large enough such that $x \in (0,1-\frac{1}{n})$. \\
+\vspace{0.1cm} \\
+To prove the converse in $\bigcup_{n=2}^{\infty} (0,1-\frac{1}{n}) \subseteq (0,1)$ we can use the same reasoning. Let $x \in (0,1-\frac{1}{n})$. Since $1-\frac{1}{n}=1$ as $n \rightarrow \infty$ and since any element in $(0,1)$ is strictly less than $1$, it follows there is some large enough $n$ such that $x \in (0,1)$. \\
+\vspace{0.1cm} \\
+Since $(0,1) \subseteq \bigcup_{n=2}^{\infty}(0,1-\frac{1}{n})$ and $\bigcup_{n=2}^{\infty}(0,1-\frac{1}{n}) \subseteq (0,1)$, they are both equal. QED. \\
+\vspace{0.1cm} \\
+\textbf{Definition 4.1.2:} If $f : X \rightarrow Y$ and $A \subseteq X$, we can "restrict" the domain of $X$ to $A$ using the notation $f|_{A}$ where $f|_{A}(a)=f(a)$ for all $a \in A$. This is called the restriction of $f$ to $A$. \\
+\vspace{0.1cm} \\
+\textbf{Remark 4.1.1:} It is not really clear why restricting $f$ to $A$ is useful, and tbh I have no idea. But, (maybe interestingly?) given the mapping $f : \mathbb{R} \rightarrow \mathbb{R}$, $f(x)=x^{2}$ it is clear this is not injective as $f(-1)=f(1)=1$ and so on with every number and its negative counterpart. However, the restriction of $f$ to $[0,\infty)$ where $f|_{[0,\infty)}(x)=x^{2}$ is injective! Also, restricting the codomain to $[0,\infty)$ makes $f$ surjective. \\
+\vspace{0.1cm} \\
+\textbf{Lemma 4.1.1:} If $f : X \rightarrow Y$ and $g : Y \rightarrow Z$ are both surjective mappings, then so is $g \circ f : X \rightarrow Z$. \\
+\textbf{Proof:} Assume $f,g$ are both surjective mappings and let $z \in Z$ such that $(g \circ f)=z$. Since $f$ is surjective, for any $y \in Y$ there is a corresponding $x \in X$ such that $f(x)=y$. So we have $g(f(x))=g(y)$. Further, since $g$ is surjective, for any $z \in Z$ there is a corresponding $y \in Y$ such that $g(y)=z$. So we have $g(f(x))=g(y)=z$. Therefore $g \circ f$ is surjective. QED. 
+\newpage
+\textbf{Theorem 4.1.1:} For a mapping $f : X \rightarrow Y$, $f$ is an injection iff for all $A \subseteq X (f^{-1}(f(A))=A)$. \\
+\textbf{Proof:} We prove this statement in two directions. We will first show if $f : X \rightarrow Y$ is an injection, then $f^{-1}(f(A))=A$. Assume that $f$ is injective. \\
+\textbf{Prove $f^{-1}(f(A)) \subseteq A$:} Let $x \in f^{-1}(f(A))$. This implies we have:
+\begin{equation*}
+    f(x) \in f(f^{-1}(f(A))) \implies f(x) \in f(A) \implies f(x)=f(a) \text{ for some } a \in A
+\end{equation*}
+Since $f$ is injective, it must hold that $x=a$ and so $x \in A$. Thus $f^{-1}(f(A)) \subseteq A$. \\
+\textbf{Prove $A \subseteq f^{-1}(f(A))$:} Let $x \in A$. This implies we have:
+\begin{equation*}
+    f(x) \in f(A) \implies f^{-1}(f(x)) \in A \implies x \in f^{-1}(f(A))
+\end{equation*}
+Thus $A \subseteq f^{-1}(f(A))$. We can therefore conclude if $f : X \rightarrow Y$ is an injection, then $f^{-1}(f(A))=A$.\\
+\vspace{0.1cm} \\
+We now prove the statement that if $f^{-1}(f(A))=A$, then $f$ is injective. Assume $f^{-1}(f(A))=A$ and that $a,b \in X$ such that $f(a)=f(b)$. Consider the set $A = \{a\} \subseteq X$, by our assumption, it follows that $f^{-1}(f(A))=\{a\}$. Since $f(a)=f(b)$, it follows $b \in f^{-1}(f(A))=\{a\}$ and thus $a=b$. This concludes the proof in both directions. QED. \\
+\noindent\rule{\textwidth}{1pt}
+\section{Lecture 5}
+\textbf{Definition 5.1.1:} If $R \subseteq X \times X$, that is, $R$ is a set of relations on $X$, we can define the "reflexive closure" of $R$. This is the "smallest" reflexive relation that contains $R$:
+\begin{equation}
+    S = R \cup \{(x,x) \;|\; x \in X\}
+\end{equation}
+The symmetric and transitive closures are defined similarily. \\
+\vspace{0.1cm} \\
+\textbf{Example 5.1.1:} Let $R \subseteq \mathbb{Z} \times \mathbb{Z} = \{(1,1),(1,2),(4,5),(3,3),(4,4),(2,2),(5,5)\}$ be a reflexive set. The reflexive closure of $R$ would be the set $S \subseteq R = \{(1,1),(2,2),(3,3),(4,4),(5,5)\}$. \\
+\vspace{0.1cm} \\
+\textbf{Example 5.1.2:} If $n$ is a positive integer, then the realtion $\equiv_{n}$ on $\mathbb{Z}$ that is defined by $x \equiv_{n} y \iff (x-y) \text{ is divisible by } n$ is an equivalence relation. \\
+\textbf{Proof:} We must prove this relation is reflexive, symmetric, and transitive. \\
+\textbf{Reflexivity:} Let $x \in \mathbb{Z}$. $(x-x)$ is divisible by $n$ implies $x-x=nm$ for some $n \in \mathbb{Z}$. Since this simplifies to $0 = nm$, it is clear this is true for $m = 0$. Thus $x \equiv_{n} x$. \\
+\textbf{Symmetry:} Let $x, y \in \mathbb{Z}$ and assume $x \equiv_{n} y$. This implies that $x - y = nm$ for some $m \in \mathbb{Z}$. We can manipulate this a bit to get $y - x = -nm \implies y - x = n(-m)$. Since $(-m) \in \mathbb{Z}$, $(y-x)$ is divisble by $n$ using our assumption and therefore $x \equiv_{n} y \implies y \equiv_{n} x$. \\
+\textbf{Transitivity:} Let $x, y, z \in \mathbb{Z}$ and assume $x \equiv_{n} y$ and $y \equiv_{n} z$. Using our assumption it follows that $y-z=nm \implies y = nm+z$ for some $m \in \mathbb{Z}$. Since we have $x-y=nv$ for some $v \in \mathbb{Z}$, we substitute our $y$ to get $x - (nm + z) = nv \implies x - z = nv + nm \implies x - z = n(v + m)$. Since $v,m \in \mathbb{Z}$ and adding two integers gives you another integer, $x-z$ is divisible by $n$. Thus $x \equiv_{n} y \land y \equiv_{n} z \implies x \equiv_{n} z$. \\
+Since $\equiv_{n}$ is reflexive, transitive, and symmetric, it is an equivalence relation. QED. \\
+\vspace{0.1cm} \\
+\textbf{Definition 5.1.2:} If $\equiv$ is an equivalence relation on a set $X$, for every $a \in X$ we define the equivalence class of $a$ (denoted $\overline{a}$ or $[a]$) to be the set:
+\begin{equation}
+    [a] = \{x \in X \;|\; x \equiv a\}
+\end{equation}
+\end{document}

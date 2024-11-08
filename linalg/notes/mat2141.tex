@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{8cm}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+% Document settings
+\geometry{a4paper, margin=1in}
+\setlength\parindent{0pt}
+\setlength\parskip{1em}
+
+\title{MAT 2141 Notes}
+\author{Nicholas Sales}
+\date{} % This will automatically insert today's date
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Linear Maps}
+
+\subsection{Definiton}
+
+\textbf{Definition 1.1.1:} If $V$ and $W$ are vector spaces over the same field $F$, and $T : V \rightarrow W$ is a mapping, we say $T$ is a linear mapping if the following hold:
+\begin{gather*}
+    T(u + v) = T(u) + T(v) \;\; \forall u,v \in V \\
+    T(cv) = cT(v) \;\; \forall v \in V, \; \forall c \in F
+\end{gather*}
+\textbf{Example 1.1.1:} Let $V = C^{\infty}(\mathbb{R}), \; F = \mathbb{R}$, and define $S : C^{\infty}(\mathbb{R}) \rightarrow C^{\infty}(\mathbb{R})$ by $(Sf)(x) = \int_{0}^{x} f(t) dt, \; \forall x \in \mathbb{R}$. \\
+\vspace{0.1cm} \\
+Let $f, g \in V$ (i.e. $f$ and $g$ are infinitely differentiable functions) and let $c \in F$. Using the properties of integration, we can show additivity and homogeneity hold:
+\begin{gather*}
+    S(f + g)(x) = \int_{0}^{x} f(t) + g(t) dt = \int_{0}^{x} f(t) dt + \int_{0}^{x} g(t) dt = (Sf)(x) + (Sg)(x) \\
+    S(cf)(x) = \int_{0}^{x} cf(t) dt = c \int_{0}^{x} f(t) dt = c(Sf)(x)
+\end{gather*}
+Since $S$ satisfies the properties of additivity and homogeneity, we conclude $S$ is a linear map. QED.
+
+\subsection{Kernel and Image}
+
+\textbf{Definiton 1.2.1:} If $T : V \rightarrow W$ is a linear map, then $Ker(T) \subseteq V$ gets mapped to the zero vector under $T$ and $Im(T) \subseteq W$ is where vectors from $V$ can actually get mapped to under $T$ (i.e. range):
+\begin{gather*}
+    Ker(T) = T^{-1}(\vec{0}) = \{x \; | \; Tx = \vec{0}\} \\
+    Im(T) = T(V) = \{Tx \; | \; x \in V\}
+\end{gather*}
+\textbf{Theorem 1.2.1:} Suppose $T : V \rightarrow W$ is a linear mapping, $T$ is injective iff $Ker(T) = \{\vec{0}\}$. \\ 
+\vspace{0.1cm} \\
+We prove this in two directions. Assume $T$ is injective and let $u,v \in V$. Since $0v = \vec{0}$ for any vector $v$ and $T(0v) = 0T(v)$ by the property of linear maps, it follows a linear mapping always maps the zero vector to the zero vector. Since for any injective mapping we have $T(u) = T(v) \implies u = v$, it follows if $T(u) = T(v) = \vec{0}$, then $u = v = \vec{0}$ and thus $Ker(T) = \{\vec{0}\}$. \\
+\vspace{0.1cm} \\
+We now prove this in the other direction. Assume $Ker(T) = \vec{0}$. We want to show if $T(u) = T(v)$ for any $u,v \in V$ then $u = v$. If $T(u) = T(v)$, it follows $T(u) - T(v) = \vec{0}$ which simplifies to $T(u - v) = \vec{0}$ by the property of linear maps. Since $Ker(T) = \{\vec{0}\}$ it follows that $T(u - v) = \vec{0} \implies u - v = \vec{0} \implies u = v$. Thus $T$ is injective. Since we have proved both implications this completes the proof. QED.
+
+\newpage
+
+\subsection{Vector Spaces of Linear Maps}
+
+\textbf{Definition 1.3.1:} If $V, W$ are vector spaces over a field $F$, we define the set of linear maps from $V$ to $W$:
+\begin{equation*}
+    \mathcal{L}(V,W) = \{T : V \rightarrow W \; | \; T \text{ is linear}\}
+\end{equation*}
+If $V = W$, we simply write $\mathcal{L}(V)$. \\
+\textbf{Definition 1.3.2:} If $A, B,$ and $C$ are sets with mappings $T : A \rightarrow B$ and $S : B \rightarrow C$, we can compose the mappings to get $ST : A \rightarrow C$ (i.e. $S \circ T$) defined by:
+\begin{equation*}
+    (ST)a = S(Ta) \;\; \forall a \in A
+\end{equation*}
+\textbf{Theorem 1.3.1:} The composition of linear maps is itself a linear map (i.e. $T \in \mathcal{L}(U,V)$ and $S \in \mathcal{L}(V,W) \implies ST \in \mathcal{L}(U,W)$). \\
+\vspace{0.1cm} \\
+Let $T \in \mathcal{L}(U,V)$ and $S \in \mathcal{L}(V,W)$ be linear maps over a field $F$ with $u,v \in U$ and $c \in F$. By the definition of composition we have:
+\begin{gather*}
+    (ST)(u + v) = S(T(u + v)) \\
+    (ST)(cu) =  S(T(cu))
+\end{gather*}
+By the property of $T$ being a linear map we get:
+\begin{gather*}
+    S(T(u + v)) = S(T(u) + T(v)) \\
+    S(T(cu)) = S(cT(u))
+\end{gather*}
+And further, by the property of $S$ being a linear map we get:
+\begin{gather*}
+    S(T(u) + T(v)) = S(T(u)) + S(T(v)) \\
+    S(cT(u)) = cS(T(u))
+\end{gather*}
+Thus, $ST$ satisfies additivity and homogeneity and is therefore a linear map. QED.
+
+\subsection{Isomorphisms}
+
+\textbf{Definition 1.4.1:} If $T : V \rightarrow W$ is a bijective linear map, we say $T$ is an isomorphism. We also say that $V$ is isomorphic to $W$ and write $V \cong W$. \\
+\textbf{Theorem 1.4.1:} Suppose $V$ and $W$ are vector spaces. Further, assume $T : V \rightarrow W$ is an isomorphism. It follows that $T^{-1} : W \rightarrow V$ is also linear and hence an isomorphism. \\
+\vspace{0.1cm} \\
+Assume $T : V \rightarrow W$ is an isomorphism. Since it follows that $T$ is bijective, it is invertible. Let $u',v' \in W$. It follows there exists some $u,v \in V$ such that $T(u) = u'$ and $T(v) = v'$. By the property of $T$ being linear, we have:
+\begin{gather*}
+    T^{-1}(u' + v') = T^{-1}(T(u) + T(v)) = T^{-1}(T(u+v)) = u + v = T^{-1}(u') + T^{-1}(v')\\
+    T^{-1}(cu') = T^{-1}(cT(u)) = T^{-1}(T(cu)) = cu = cT^{-1}(u')
+\end{gather*}
+Thus $T^{-1}$ preserves additivity and homogeneity and is therefore a linear map. And moreover, since it is the inverse of a bijective mapping, it is also bijective, and thus an isomorphism. QED. 
+
+\newpage
+
+\textbf{Theorem 1.4.2:} Isomorphisms are an equivalence relation. In other words, if $U,V,W$ are all vector spaces over the same field $F$, the following properties hold:
+\begin{gather*}
+    U \cong U \\ 
+    U \cong V \implies V \cong U \\
+    U \cong V \text{ and } V \cong W \implies U \cong W
+\end{gather*}
+This proof is left to the non-existent reader.
+
+\section{Structure of Vector Spaces}
+
+\subsection{Spans and Generating Sets}
+
+
+\end{document}

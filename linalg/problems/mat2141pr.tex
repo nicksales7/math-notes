@@ -1,0 +1,45 @@
+\documentclass[11pt]{article}
+
+% Packages
+\usepackage[utf8]{inputenc}
+\usepackage{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{8cm}
+    \import{./figures/}{#1.pdf_tex}
+}
+
+% Document settings
+\geometry{a4paper, margin=1in}
+\setlength\parindent{0pt}
+\setlength\parskip{1em}
+
+\title{MAT 2141 Problems}
+\author{Nicholas Sales}
+\date{\today} % This will automatically insert today's date
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{DGD 5}
+
+\textbf{3.3.3:} Prove that $F[x]$ is not finitely generated. Hint: Suppose $p_1 , \dots , p_n \in F[x]$. Find $p \in F[x]$ such that $p \notin Span\{p_1 , \dots, p_n\}$ \\
+\textbf{Proof 3.3.3:} Assume $F[x]$ is finitely generated. Given this assumption, it follows there exists some $p_1 , \dots , p_n \in F[x]$ such that $Span\{p_1 , \dots , p_n\} = F[x]$ where each $p_i$ has degree $i$. Since $F[x]$ is the infinite set containing polynomials of all degrees, it follows there exists some polynomial of degree $n + 1$. Since $Span\{p_1 , \dots , p_n\}$ can at most be of degree $n$, it follows $p_{n + 1} \in F[x]$ is not an element of the span. This is a contradiction and therefore $F[x]$ cannot be finitely generated. QED.
+    
+\end{document}
